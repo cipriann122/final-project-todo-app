@@ -48,6 +48,7 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 // Import useUserStore to access user-related data
 import { useUserStore } from "../src/stores/user";
+import { supabase } from "./lib/supabaseClient";
 
 // ------------------------------------------------------------------------
 // Variable Definition Block
