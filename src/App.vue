@@ -1,8 +1,3 @@
-<!-- 
-This file defines a Vue.js component for the header of a to-do application.
-It manages user authentication states, displays navigation links conditionally based on the user's login status, and includes functionality to log out users.
--->
-
 <template>
   <header>
     <div class="wrapper">
@@ -34,10 +29,6 @@ It manages user authentication states, displays navigation links conditionally b
 </template>
 
 <script setup>
-// ------------------------------------------------------------------------
-// Import Block
-// ------------------------------------------------------------------------
-
 // Import the HelloWorld component
 import HelloWorld from "./components/HelloWorld.vue";
 // Import ref, onMounted, and onBeforeMount from Vue
@@ -48,11 +39,6 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 // Import useUserStore to access user-related data
 import { useUserStore } from "../src/stores/user";
-
-// ------------------------------------------------------------------------
-// Variable Definition Block
-// ------------------------------------------------------------------------
-
 // Router instance for navigation
 const router = useRouter();
 // Store user accessed easily here
@@ -61,11 +47,6 @@ const userStore = useUserStore();
 const { user, isLoggedIn } = storeToRefs(userStore);
 // Reactive variable to hide/show elements based on user login status
 const isUserloggedIn = ref(false);
-
-// ------------------------------------------------------------------------
-// Lifecycle Hook: onMounted
-// ------------------------------------------------------------------------
-
 // Using the onMounted lifecycle hook to perform actions when the component is mounted
 onMounted(() => {
   console.log("hello calling function");
@@ -85,11 +66,6 @@ onMounted(() => {
     console.log(error);
   }
 });
-
-// ------------------------------------------------------------------------
-// Function to Sign Out User
-// ------------------------------------------------------------------------
-
 /**
  * Signs out the user and redirects to the login page.
  */
@@ -101,23 +77,9 @@ let handleSignOut = () => {
   // Update the reactive variable to false
   isUserloggedIn.value = false;
 };
-
-/*
-  The handleSignOut function is used to log out the current user.
-  - It calls the signOut function from the user store to clear user data.
-  - It redirects the user to the login page.
-  - It updates the isUserloggedIn reactive variable to false.
-  */
-
 // ------------------------------------------------------------------------
 // Additional Lifecycle Hooks (Placeholder for onBeforeMount, onUpdated)
 // ------------------------------------------------------------------------
 
 // Additional lifecycle hooks such as onBeforeMount and onUpdated can be added here if needed.
 </script>
-
-<!-- 
-What is storeToRefs?
-In order to extract properties from the store while keeping its reactivity, you need to use storeToRefs(). It will create refs for every reactive property. This is useful when you are only using state from the store but not calling any action. Note you can destructure actions directly from the store as they are bound to the store itself too.
-Link: https://pinia.vuejs.org/core-concepts/
--->

@@ -1,8 +1,3 @@
-<!--
-This file defines a Vue.js component for displaying completed tasks in a to-do application.
-By building this component, we will achieve a user interface that shows a list of tasks marked as completed, leveraging global state management with Pinia.js.
--->
-
 <template>
   <h4>This Page Displays completed tasks</h4>
   <div class="container">
@@ -52,20 +47,12 @@ By building this component, we will achieve a user interface that shows a list o
 </template>
 
 <script setup>
-// ------------------------------------------------------------------------
-// Import Block
-// ------------------------------------------------------------------------
-
 // Import computed from Vue to create a computed property
 import { computed } from "vue";
 // Import the useTaskStore function from taskStore to interact with the task store
 import { useTaskStore } from "../stores/taskStore";
 // Import the useUserStore function from userStore to interact with the user store
 import { useUserStore } from "../stores/user";
-
-// ------------------------------------------------------------------------
-// Store Access Block
-// ------------------------------------------------------------------------
 
 // Use the task store by saving it in a variable
 const taskstore = useTaskStore();
@@ -75,30 +62,8 @@ const userStore = useUserStore();
 // Destructure all the possible pieces of data that we want out of this
 const { tasks, getTasksByUserId } = taskstore; // Destructure necessary functions and state from the task store
 
-// ------------------------------------------------------------------------
-// Computed Property Block 1
-// ------------------------------------------------------------------------
-
 // Computed property to filter completed tasks
 let completedTasks = computed(() => tasks.filter((task) => task.isCompleted));
-
-/*
-  The completedTasks computed property filters the tasks array to include only the tasks that are marked as completed.
-  - It uses the filter method to iterate over the tasks array.
-  - For each task, it checks if the isCompleted property is true.
-  - The resulting array contains only the tasks that are completed.
-  */
-
-// ------------------------------------------------------------------------
-// Computed Property Block 2
-// ------------------------------------------------------------------------
-
-/*
-  The completedTasks computed property filters the tasks array to include only the tasks that are marked as completed.
-  - It uses the filter method to iterate over the tasks array.
-  - For each task, it checks if the isCompleted property is true.
-  - The resulting array contains only the tasks that are completed.
-  */
 
 // Computed property to get completed tasks for the current user
 const userCompletedTasks = computed(() => {
@@ -112,12 +77,4 @@ const userCompletedTasks = computed(() => {
   }
   return []; // If the user is not logged in, return an empty array
 });
-
-/*
-  The userCompletedTasks computed property filters the tasks for the current user to include only the tasks that are marked as completed.
-  - It checks if the user is logged in and the user object exists.
-  - It calls the getTasksByUserId function with the current user's ID to get the user's tasks.
-  - It uses the filter method to iterate over the user's tasks and include only the tasks that are completed.
-  - If the user is not logged in, it returns an empty array.
-  */
 </script>
