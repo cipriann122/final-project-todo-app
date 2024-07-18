@@ -1,4 +1,5 @@
 import "./assets/main.css";
+import "./assets/tailwind.css";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -13,6 +14,8 @@ import InputText from "primevue/inputtext";
 import ToastService from "primevue/toastservice";
 import Button from "primevue/button";
 import Toast from "primevue/toast";
+import ToggleButton from "primevue/togglebutton";
+import ToggleSwitch from "primevue/toggleswitch";
 
 const app = createApp(App);
 
@@ -24,11 +27,14 @@ app.use(PrimeVue, {
     },
   },
 });
+
 app.use(ToastService);
 app.component("Password", Password);
 app.component("InputText", InputText);
 app.component("Button", Button);
 app.component("Toast", Toast);
+app.component("ToggleButton", ToggleButton);
+app.component("ToggleSwitch", ToggleSwitch);
 
 app.use(createPinia());
 app.use(router);

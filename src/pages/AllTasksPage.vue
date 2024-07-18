@@ -19,14 +19,27 @@
         >
           Mark as Completed
         </button>
+        <Button
+          label="Mark as Completed"
+          text
+          raised
+          @click="markTaskCompleted(task.id)"
+        />
         <button @click="deleteTask(task.id)">Delete Task</button>
-        <button @click="editTask(task.id)">Edit Task</button>
+        <button @click="editTaskClicked(task)">Edit Task</button>
+        <!-- New button for edit -->
       </li>
     </ul>
     <div v-else>
       <p>No tasks found.</p>
     </div>
   </div>
+  <TaskEditModal
+    v-if="showEditModal"
+    :task="selectedTask"
+    @updateTask="updateTask"
+    @close="closeEditModal"
+  />
 </template>
 
 <script setup>
@@ -34,15 +47,19 @@ import { ref, watch } from "vue";
 import { useTaskStore } from "../stores/taskStore";
 import { useUserStore } from "../stores/user";
 import { useRoute } from "vue-router";
+import TaskEditModal from "../components/TaskEditModal.vue";
 
 const taskstore = useTaskStore();
 const userStore = useUserStore();
 
-const { tasks, deleteTask, markTaskCompleted, getTasksByUserId } = taskstore;
+const { tasks, deleteTask, markTaskCompleted, getTasksByUserId, editTask } =
+  taskstore;
 const route = useRoute();
 
 const loading = ref(false);
 const error = ref(null);
+const showEditModal = ref(false);
+const selectedTask = ref(null);
 
 watch(
   () => userStore.isLoggedIn,
@@ -69,6 +86,21 @@ async function fetchData(userId) {
   } finally {
     loading.value = false;
   }
+}
+
+function editTaskClicked(task) {
+  selectedTask.value = task;
+  showEditModal.value = true;
+}
+
+function updateTask(updatedTask) {
+  // Call editTask from taskstore to update the task
+  editTask(updatedTask.id, updatedTask);
+  closeEditModal();
+}
+
+function closeEditModal() {
+  showEditModal.value = false;
 }
 </script>
 

@@ -21,6 +21,7 @@
           <button @click="handleSignOut">Sign Out</button>
         </template>
       </nav>
+      <button @click="toggleDark()">Toggle Dark Mode</button>
     </div>
   </header>
 
@@ -29,25 +30,19 @@
 </template>
 
 <script setup>
-// Import the HelloWorld component
-import HelloWorld from "./components/HelloWorld.vue";
-// Import ref, onMounted, and onBeforeMount from Vue
 import { ref, onMounted, onBeforeMount } from "vue";
-// Import storeToRefs from Pinia to keep reactivity
 import { storeToRefs } from "pinia";
-// Import useRouter from vue-router for navigation
 import { useRouter } from "vue-router";
-// Import useUserStore to access user-related data
 import { useUserStore } from "../src/stores/user";
-// Router instance for navigation
+import { useDark, useToggle } from "@vueuse/core";
+
 const router = useRouter();
-// Store user accessed easily here
 const userStore = useUserStore();
-// Destructure the variable 'user' and 'isLoggedIn' out of the store, keeping their reactivity using storeToRefs
 const { user, isLoggedIn } = storeToRefs(userStore);
-// Reactive variable to hide/show elements based on user login status
 const isUserloggedIn = ref(false);
-// Using the onMounted lifecycle hook to perform actions when the component is mounted
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
+
 onMounted(() => {
   try {
     // Fetch the user data from the store
@@ -76,9 +71,4 @@ let handleSignOut = () => {
   // Update the reactive variable to false
   isUserloggedIn.value = false;
 };
-// ------------------------------------------------------------------------
-// Additional Lifecycle Hooks (Placeholder for onBeforeMount, onUpdated)
-// ------------------------------------------------------------------------
-
-// Additional lifecycle hooks such as onBeforeMount and onUpdated can be added here if needed.
 </script>

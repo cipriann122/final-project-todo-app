@@ -96,14 +96,15 @@ export const useTaskStore = defineStore("taskStore", () => {
     }
   }
 
-  async function editTask(taskId) {
-    let task = tasks.find((task) => task.id === taskId);
-    if (task) {
-      try {
-        // Update the task's is_complete status in Supabase
+  async function editTask(taskId, updatedTask) {
+    try {
+      // Find the task in the local reactive array
+      let task = tasks.find((task) => task.id === taskId);
+      if (task) {
+        // Update the task in Supabase
         const { error } = await supabase
           .from("todos")
-          .update()
+          .update(updatedTask) // Update with the new task object
           .eq("id", taskId)
           .single();
 
@@ -114,12 +115,12 @@ export const useTaskStore = defineStore("taskStore", () => {
         }
 
         // Update the task locally
-        task.is_complete = true;
-        console.log("Task marked as completed:", taskId);
-      } catch (err) {
-        alert("Error");
-        console.error("Unknown problem updating record", err);
+        Object.assign(task, updatedTask); // Update properties of the task object
+        console.log("Task updated:", taskId);
       }
+    } catch (err) {
+      alert("Error");
+      console.error("Unknown problem updating record", err);
     }
   }
 
@@ -171,6 +172,7 @@ export const useTaskStore = defineStore("taskStore", () => {
     tasks,
     addTask,
     markTaskCompleted,
+    editTask,
     deleteTask,
     getTasksByUserId,
     generateTaskForCurrentUser,
