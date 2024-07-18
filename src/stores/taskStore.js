@@ -117,7 +117,6 @@ export const useTaskStore = defineStore("taskStore", () => {
         // No need to parse description, it's already an object
         tasks.push(todo);
       });
-      console.log(tasks);
       return tasks;
     } catch (err) {
       console.error("Error retrieving data from db", err);

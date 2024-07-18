@@ -21,6 +21,4 @@ let incrementNumberFunctionFromStore = countStore.increment;
 
 const userStore = useUserStore();
 const { getTasksForUser } = storeToRefs(userStore);
-
-console.log(userStore.getTasksForUser());
 </script>

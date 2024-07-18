@@ -137,7 +137,6 @@ export const useUserStore = defineStore("user", () => {
    */
   function getTasksForUser() {
     const taskStore = useTaskStore();
-    console.log(user);
     return taskStore.getTasksByUserId(user.value.id);
   }
   return {

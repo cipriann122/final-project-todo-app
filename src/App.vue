@@ -49,7 +49,6 @@ const { user, isLoggedIn } = storeToRefs(userStore);
 const isUserloggedIn = ref(false);
 // Using the onMounted lifecycle hook to perform actions when the component is mounted
 onMounted(() => {
-  console.log("hello calling function");
   try {
     // Fetch the user data from the store
     userStore.fetchUser();
