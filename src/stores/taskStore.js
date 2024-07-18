@@ -96,6 +96,33 @@ export const useTaskStore = defineStore("taskStore", () => {
     }
   }
 
+  async function editTask(taskId) {
+    let task = tasks.find((task) => task.id === taskId);
+    if (task) {
+      try {
+        // Update the task's is_complete status in Supabase
+        const { error } = await supabase
+          .from("todos")
+          .update()
+          .eq("id", taskId)
+          .single();
+
+        if (error) {
+          alert(error.message);
+          console.error("There was an error updating the task:", error);
+          return;
+        }
+
+        // Update the task locally
+        task.is_complete = true;
+        console.log("Task marked as completed:", taskId);
+      } catch (err) {
+        alert("Error");
+        console.error("Unknown problem updating record", err);
+      }
+    }
+  }
+
   /**
    * Retrieves tasks that belong to a specific user.
    * @param {number} userId - The ID of the user whose tasks are to be retrieved.

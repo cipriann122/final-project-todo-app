@@ -20,6 +20,7 @@
           Mark as Completed
         </button>
         <button @click="deleteTask(task.id)">Delete Task</button>
+        <button @click="editTask(task.id)">Edit Task</button>
       </li>
     </ul>
     <div v-else>
