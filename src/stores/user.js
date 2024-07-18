@@ -12,6 +12,12 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 // Import useTaskStore to access tasks related to the user
 import { useTaskStore } from "./taskStore";
+import { createClient } from "@supabase/supabase-js";
+
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 // ------------------------------------------------------------------------
 // Store Definition Block
@@ -96,13 +102,20 @@ export const useUserStore = defineStore("user", () => {
    * @param {string} email - The email of the new user.
    * @param {string} password - The password of the new user.
    */
-  function register(email, password) {
+  async function register(email, password) {
     const newUser = { id: Date.now(), email, password };
     user.value = newUser;
     saveToLocalStorage("user", newUser);
     const newProfile = { user_id: newUser.id, username: email };
     profile.value = newProfile;
     saveToLocalStorage("profile", newProfile);
+    const { data, error } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+      if(error) {
+        console.log(error);
+      },
+    });
   }
 
   /*
@@ -122,18 +135,38 @@ export const useUserStore = defineStore("user", () => {
    * @param {string} password - The password of the user.
    * @throws Will throw an error if the user is not found or the password is incorrect.
    */
-  function signIn(email, password) {
-    let storedUser = getFromLocalStorage("user");
-    if (
-      storedUser &&
-      storedUser.email === email &&
-      storedUser.password === password
-    ) {
-      user.value = storedUser;
-      profile.value = getFromLocalStorage("profile");
-      isLoggedIn.value = true;
+  async function signIn(email, password) {
+    // let storedUser = getFromLocalStorage("user");
+    // if (
+    //   storedUser &&
+    //   storedUser.email === email &&
+    //   storedUser.password === password
+    // ) {
+    //   user.value = storedUser;
+    //   profile.value = getFromLocalStorage("profile");
+    //   isLoggedIn.value = true;
+    // } else {
+    //   throw new Error("User not found or password incorrect");
+    // }
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    if (data) {
+      user.value = {
+        id: data.user.id,
+        email: email,
+        password: password,
+      };
+      saveToLocalStorage("user", user.value);
+
+      profile.value = {
+        user_id: data.user.id,
+        username: email,
+      };
+      saveToLocalStorage("profile", profile.value);
     } else {
-      throw new Error("User not found or password incorrect");
+      console.error(error);
     }
   }
 
@@ -176,6 +209,7 @@ export const useUserStore = defineStore("user", () => {
    */
   function getTasksForUser() {
     const taskStore = useTaskStore();
+    console.log(user);
     return taskStore.getTasksByUserId(user.value.id);
   }
 

@@ -12,6 +12,9 @@ import { reactive } from "vue";
 // Import defineStore from Pinia to define a new store
 import { defineStore } from "pinia";
 
+// Import useUserStore to access the currently logged-in user
+import { useUserStore } from "./user";
+import { supabase } from "./user";
 // ------------------------------------------------------------------------
 // Store Definition Block
 // ------------------------------------------------------------------------
@@ -20,31 +23,7 @@ import { defineStore } from "pinia";
 // Pass 2 args inside defineStore method
 export const useTaskStore = defineStore("taskStore", () => {
   // Initial array of tasks using reactive to keep the state reactive
-  const tasks = reactive([
-    {
-      id: 1, // Unique identifier for the task
-      title: "Buy ingredients to make Tacos", // Title of the task
-      description: {
-        title:
-          "Go to the latin shop next to my house to buy groceries for this friday's dinner with friends", // Detailed description of the task
-        timeToBeCompleted: "2 hours", // Estimated time to complete the task
-        extraInfoRequired: ["Guacamole", "Nachos"], // Additional information required for the task
-      },
-      isCompleted: true, // Boolean indicating if the task is completed
-      userId: 1, // Link task to user with id 1
-    },
-    {
-      id: 2, // Unique identifier for the task
-      title: "Clean out House", // Title of the task
-      description: {
-        title: "Clean House by friday for friends dinner", // Detailed description of the task
-        timeToBeCompleted: "1 hour", // Estimated time to complete the task
-        extraInfoRequired: ["swap", "mop", "dust"], // Additional information required for the task
-      },
-      isCompleted: false, // Boolean indicating if the task is completed
-      userId: 2, // Link task to user with id 2
-    },
-  ]);
+  const tasks = reactive([]);
 
   // ----------------------------------------------------------------------
   // Function to add a new task
@@ -54,8 +33,27 @@ export const useTaskStore = defineStore("taskStore", () => {
    * Adds a new task to the tasks array.
    * @param {Object} task - The task object to be added.
    */
-  function addTask(task) {
-    tasks.push(task); // Push the new task to the tasks array
+  async function addTask(task) {
+    try {
+      const { data, error } = await supabase
+        .from("todos")
+        .insert(task)
+        .single();
+
+      if (error) {
+        alert(error.message);
+        console.error("There was an error inserting", error);
+        return null;
+      }
+
+      console.log("created a new todo");
+      tasks.push(task); // Push the new task to the tasks array
+      return data;
+    } catch (err) {
+      alert("Error");
+      console.error("Unknown problem inserting to db", err);
+      return null;
+    }
   }
 
   /*
@@ -73,12 +71,30 @@ export const useTaskStore = defineStore("taskStore", () => {
    * Marks a specific task as completed.
    * @param {number} taskId - The ID of the task to be marked as completed.
    */
-  function markTaskCompleted(taskId) {
+  async function markTaskCompleted(taskId) {
     // Find the task by its ID
     let task = tasks.find((task) => task.id === taskId);
     // If task is found, mark it as completed
     if (task) {
-      task.isCompleted = true; // Set the task's isCompleted property to true
+      try {
+        const { error } = await supabase
+          .from("todos")
+          .update({ is_complete: isCompleted })
+          .eq("id", todo.id)
+          .single();
+
+        if (error) {
+          alert(error.message);
+          console.error("There was an error updating", error);
+          return;
+        }
+        task.isCompleted = true; // Set the task's isCompleted property to true
+
+        console.log("Updated task", todo.id);
+      } catch (err) {
+        alert("Error");
+        console.error("Unknown problem updating record", err);
+      }
     }
   }
 
@@ -123,8 +139,29 @@ export const useTaskStore = defineStore("taskStore", () => {
    * @param {number} userId - The ID of the user whose tasks are to be retrieved.
    * @returns {Array} - An array of tasks that belong to the specified user.
    */
-  function getTasksByUserId(userId) {
-    return tasks.filter((task) => task.userId === userId);
+  async function getTasksByUserId(userId) {
+    try {
+      const { data: todos, error } = await supabase
+        .from("todos")
+        .select("*")
+        .order("id");
+
+      if (error) {
+        console.log("error", error);
+        return;
+      }
+      // handle for when no todos are returned
+      if (todos === null) {
+        tasks = [];
+        return;
+      }
+      // store response to allTodos
+      tasks.push(todos);
+      console.log(tasks);
+      return tasks;
+    } catch (err) {
+      console.error("Error retrieving data from db", err);
+    }
   }
 
   /*
@@ -135,9 +172,56 @@ export const useTaskStore = defineStore("taskStore", () => {
   */
 
   // ----------------------------------------------------------------------
+  // Function to add tasks by user ID
+  // ----------------------------------------------------------------------
+
+  // /**
+  //  * Generates a new task for the currently logged-in user.
+  //  * @param {string} taskTitle - The title of the task to be generated.
+  //  * @param {string} taskDescription - The description of the task to be generated.
+  //  * @throws {Error} - Throws an error if no user is logged in.
+  //  */
+
+  function generateTaskForCurrentUser(taskTitle, taskDescription) {
+    // Save the acces to the user tore inside a variable
+    let userStore = useUserStore();
+    // Inside the if condition, we want to check if the variable inside the user store which is
+    // userStore.isLoggedIn is riggering for a truthy condition
+    if (userStore.isLoggedIn) {
+      // lets save the structure of the new task to be submitted as an object, inside a variable. That way we can then send it correctly to the addTask() function above on this file.
+      const newTask = {
+        id: Date.now(), // Unique identifier for the task - we are using the DATE.now method from JS to generate a random 12 Digit Characters
+        task: taskTitle, // Title of the task
+        description: taskDescription,
+        is_complete: false, // Boolean indicating if the task is completed
+        user_id: userStore.user.id, // It will link the newTask to that specific user by allocating the userID to this particular key.
+        inserted_at: new Date().toISOString(),
+      };
+      addTask(newTask); // Add's new task with the user id matched to it to the tasks Array
+    } else {
+      throw new Error("User is not logged in"); // This is for pure engineering purposes, you can go ahead and upgrade as you see fit.
+    }
+  }
+
+  /*
+The generateTaskForCurrentUser function creates a new task for the currently logged-in user. 
+It first retrieves the user information and checks if a user is logged in. If so, it constructs a 
+new task with a unique identifier, provided title and description, and associates it with the 
+logged-in user. The task is then added to the tasks array. If no user is logged in, the function 
+throws an error.
+*/
+
+  // ----------------------------------------------------------------------
   // Return statement to export all pieces of data or functions globally
   // ----------------------------------------------------------------------
-  return { tasks, addTask, markTaskCompleted, deleteTask, getTasksByUserId };
+  return {
+    tasks,
+    addTask,
+    markTaskCompleted,
+    deleteTask,
+    getTasksByUserId,
+    generateTaskForCurrentUser,
+  };
 });
 
 /*

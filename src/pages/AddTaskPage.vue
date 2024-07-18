@@ -66,6 +66,8 @@ By building this component, we will achieve a user interface that allows users t
 import { reactive, ref } from "vue";
 // Importing the useTaskStore function from taskStore to interact with the task store
 import { useTaskStore } from "../stores/taskStore";
+// Importing the useUserStore function from userStore to interact with the user store
+import { useUserStore } from "../stores/user";
 
 // ------------------------------------------------------------------------
 // Store Access Block
@@ -73,7 +75,9 @@ import { useTaskStore } from "../stores/taskStore";
 
 // Use the task store
 const taskStore = useTaskStore();
-const { addTask } = taskStore; // Destructure addTask function from the task store
+// Use the user store
+const userStore = useUserStore();
+const { generateTaskForCurrentUser } = taskStore; // Destructure addTask function from the task store
 
 // ------------------------------------------------------------------------
 // Reactive Variables Block
@@ -81,14 +85,12 @@ const { addTask } = taskStore; // Destructure addTask function from the task sto
 
 // Reactive object for the new task
 const newTask = reactive({
-  id: Date.now(), // Set initial ID to current timestamp
   title: "", // Title of the new task
   description: {
     title: "", // Detailed description of the new task
     timeToBeCompleted: "", // Time required to complete the new task
     extraInfoRequired: [], // Array for additional information required for the task
   },
-  isCompleted: false, // Initial completion status of the new task
 });
 
 const newExtraInfo = ref(""); // Reference for new extra info input
@@ -100,17 +102,17 @@ const taskAdded = ref(false); // Reference for tracking if a task has been added
 
 // Function to handle form submission
 const handleSubmit = () => {
-  const taskToAdd = JSON.parse(JSON.stringify(newTask)); // Create a deep copy of the new task to avoid reactivity issues
-  taskToAdd.id = Date.now(); // Update ID to ensure uniqueness
-  addTask(taskToAdd); // Add the new task to the store
-  taskAdded.value = true; // Set taskAdded to true to show the success message
+  const taskTitle = newTask.title;
+  const taskDescription = JSON.parse(JSON.stringify(newTask.description)); // // Create a deep copy of the new task description to avoid reactivity issues
+  generateTaskForCurrentUser(taskTitle, taskDescription);
+  // Use generateTaskForCurrentUser to add the new task for the logged-in user
+  taskAdded.value = true;
 };
 
 /*
   The handleSubmit function handles the form submission process.
-  - It creates a deep copy of the newTask object to avoid any reactivity issues.
-  - It updates the id of the taskToAdd to ensure it is unique by setting it to the current timestamp.
-  - It calls the addTask function from the task store to add the new task to the global state.
+  - It creates a deep copy of the newTask description object to avoid any reactivity issues.
+  - It calls the generateTaskForCurrentUser function from the task store to add the new task for the logged-in user.
   - It sets taskAdded to true to indicate that a task has been successfully added.
   */
 
