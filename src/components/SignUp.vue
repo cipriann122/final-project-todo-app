@@ -44,6 +44,8 @@
           to="/auth/login"
           size="small"
           class="link-button"
+          severity="success"
+          text
         />
       </p>
     </div>
@@ -140,10 +142,11 @@ const signUp = async () => {
 .link-button {
   margin-top: 0.5rem;
   color: var(--primary-color);
+  text-decoration: none;
 }
 
 .link-button:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 @media (max-width: 600px) {

@@ -24,6 +24,10 @@
             <button @click="handleSignOut" class="btn">Sign Out</button>
           </template>
         </div>
+        <HamburgerMenu
+          :isLoggedIn="isLoggedIn"
+          :handleSignOut="handleSignOut"
+        />
       </div>
     </nav>
     <main class="container mt-4">
@@ -33,10 +37,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeMount } from "vue";
+import { ref, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../src/stores/user";
+import HamburgerMenu from "./components/HamburgerMenu.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -57,7 +62,7 @@ onMounted(() => {
   }
 });
 
-let handleSignOut = () => {
+const handleSignOut = () => {
   userStore.signOut();
   router.push({ path: "/auth/login" });
   isUserloggedIn.value = false;
@@ -80,5 +85,58 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+.navbar {
+  background-color: #1e1e1e;
+  padding: 1rem 0;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+.btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #38a169;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
 }
 </style>
