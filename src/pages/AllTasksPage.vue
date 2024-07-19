@@ -1,36 +1,36 @@
 <template>
-  <h4>This Page Displays all tasks</h4>
   <div class="container">
-    <div v-if="loading">Loading tasks...</div>
-    <div v-if="error">{{ error }}</div>
-    <ul v-else-if="tasks.length > 0">
-      <li v-for="task in tasks" :key="task.id">
-        <h5>{{ task.task }}</h5>
-        <p>Title: {{ task.description.title }}</p>
+    <h1 class="header">All Tasks</h1>
+    <div v-if="loading" class="text-center">Loading tasks...</div>
+    <div v-if="error" class="error">{{ error }}</div>
+    <div v-else-if="tasks.length > 0" class="row">
+      <div v-for="task in tasks" :key="task.id" class="col-4 card">
+        <h3>{{ task.task }}</h3>
+        <p><strong>Title:</strong> {{ task.description.title }}</p>
         <p>
-          Extra Info Required:
+          <strong>Extra Info Required:</strong>
           {{ task.description.extraInfoRequired.join(", ") }}
         </p>
-        <p>Time to Be Completed: {{ task.description.timeToBeCompleted }}</p>
-        <p>{{ task.is_complete ? "Completed" : "Incomplete" }}</p>
+        <p>
+          <strong>Time to Be Completed:</strong>
+          {{ task.description.timeToBeCompleted }}
+        </p>
+        <p>
+          <strong>Status:</strong>
+          {{ task.is_complete ? "Completed" : "Incomplete" }}
+        </p>
         <button
+          class="button"
           :disabled="task.is_complete"
           @click="markTaskCompleted(task.id)"
         >
           Mark as Completed
         </button>
-        <Button
-          label="Mark as Completed"
-          text
-          raised
-          @click="markTaskCompleted(task.id)"
-        />
-        <button @click="deleteTask(task.id)">Delete Task</button>
-        <button @click="editTaskClicked(task)">Edit Task</button>
-        <!-- New button for edit -->
-      </li>
-    </ul>
-    <div v-else>
+        <button class="button" @click="deleteTask(task.id)">Delete Task</button>
+        <button class="button" @click="editTaskClicked(task)">Edit Task</button>
+      </div>
+    </div>
+    <div v-else class="text-center">
       <p>No tasks found.</p>
     </div>
   </div>
@@ -105,8 +105,15 @@ function closeEditModal() {
 </script>
 
 <style scoped>
-button {
-  display: block;
+.card {
+  margin-bottom: 1rem;
+}
+.button {
+  margin-right: 0.5rem;
   margin-bottom: 0.5rem;
+}
+.error {
+  color: #ff4d4f;
+  margin-bottom: 1rem;
 }
 </style>

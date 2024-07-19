@@ -1,72 +1,93 @@
 <template>
-  <div>
-    <h1>Add New Task</h1>
-    <!-- v-if directive to show success message if taskAdded is true, otherwise show the form -->
-    <div v-if="taskAdded">
-      <p>Yay! New task created.</p>
-      <button @click="startNewTask">Start a New Task</button>
+  <div class="container">
+    <h1 class="header">Add New Task</h1>
+    <div v-if="taskAdded" class="text-center">
+      <p>New task succesfully created.</p>
+      <button @click="startNewTask" class="button primary">
+        Start a New Task
+      </button>
     </div>
-    <div v-else>
+    <div v-else class="form-widget">
       <form @submit.prevent="handleSubmit">
-        <div>
-          <label for="title">Title:</label>
-          <input v-model="newTask.title" type="text" id="title" required />
+        <div class="form-input">
+          <label for="title" class="input-field-label">Title:</label>
+          <input
+            v-model="newTask.title"
+            type="text"
+            id="title"
+            class="input-field"
+            required
+          />
         </div>
-        <div>
-          <label for="descriptionTitle">Description Title:</label>
+        <div class="form-input">
+          <label for="descriptionTitle" class="input-field-label"
+            >Description Title:</label
+          >
           <input
             v-model="newTask.description.title"
             type="text"
             id="descriptionTitle"
+            class="input-field"
             required
           />
         </div>
-        <div>
-          <label for="timeToBeCompleted">Time to be Completed:</label>
+        <div class="form-input">
+          <label for="timeToBeCompleted" class="input-field-label"
+            >Time to be Completed:</label
+          >
           <input
             v-model="newTask.description.timeToBeCompleted"
             type="text"
             id="timeToBeCompleted"
+            class="input-field"
             required
           />
         </div>
-        <div>
-          <label for="extraInfo">Extra Info Required:</label>
-          <input v-model="newExtraInfo" type="text" id="extraInfo" />
-          <button type="button" @click="addExtraInfo">Add Info</button>
-          <ul>
+        <div class="form-input">
+          <label for="extraInfo" class="input-field-label"
+            >Extra Info Required:</label
+          >
+          <div class="flex">
+            <input
+              v-model="newExtraInfo"
+              type="text"
+              id="extraInfo"
+              class="input-field flex-1"
+            />
+            <button type="button" @click="addExtraInfo" class="button">
+              Add Info
+            </button>
+          </div>
+          <ul class="extra-info-list">
             <li
               v-for="(info, index) in newTask.description.extraInfoRequired"
               :key="index"
             >
               {{ info }}
-              <button type="button" @click="removeExtraInfo(index)">
+              <button
+                type="button"
+                @click="removeExtraInfo(index)"
+                class="button"
+              >
                 Remove
               </button>
             </li>
           </ul>
         </div>
-        <button type="submit">Add Task</button>
+        <button type="submit" class="button primary block">Add Task</button>
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
-// Importing reactive and ref from Vue for reactivity and references
 import { reactive, ref } from "vue";
-// Importing the useTaskStore function from taskStore to interact with the task store
 import { useTaskStore } from "../stores/taskStore";
-// Importing the useUserStore function from userStore to interact with the user store
 import { useUserStore } from "../stores/user";
 
-// Use the task store
 const taskStore = useTaskStore();
-// Use the user store
 const userStore = useUserStore();
-const { generateTaskForCurrentUser } = taskStore; // Destructure addTask function from the task store
-
-// Reactive object for the new task
+const { generateTaskForCurrentUser } = taskStore;
 const newTask = reactive({
   title: "", // Title of the new task
   description: {
@@ -114,3 +135,13 @@ const startNewTask = () => {
   taskAdded.value = false; // Set taskAdded to false to show the form again
 };
 </script>
+
+<style scoped>
+.extra-info-list {
+  list-style-type: none;
+  padding: 0;
+}
+.extra-info-list li {
+  margin-bottom: 0.5rem;
+}
+</style>

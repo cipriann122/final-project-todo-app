@@ -69,10 +69,10 @@ export const useUserStore = defineStore("user", () => {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
-      if(error) {
-        console.log(error);
-      },
     });
+    if (error) {
+      throw new Error(error.message);
+    }
   }
 
   /**
@@ -82,26 +82,12 @@ export const useUserStore = defineStore("user", () => {
    * @throws Will throw an error if the user is not found or the password is incorrect.
    */
   async function signIn(email, password) {
-    // let storedUser = getFromLocalStorage("user");
-    // if (
-    //   storedUser &&
-    //   storedUser.email === email &&
-    //   storedUser.password === password
-    // ) {
-    //   user.value = storedUser;
-    //   profile.value = getFromLocalStorage("profile");
-    //   isLoggedIn.value = true;
-    // } else {
-    //   throw new Error("User not found or password incorrect");
-    // }
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
-
     if (error) {
-      console.error(error);
-      throw new Error("Failed to sign in");
+      throw new Error(error.message);
     }
 
     if (data && data.user) {

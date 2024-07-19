@@ -1,32 +1,34 @@
 <template>
-  <header>
-    <div class="wrapper">
-      <!-- Display a welcome message using the HelloWorld component -->
-      <HelloWorld msg="Final Boiler Plate" />
-
-      <!-- Navigation links -->
-      <nav>
-        <template v-if="!isLoggedIn">
-          <!-- If the user is not logged in, show these links -->
-          <RouterLink to="/auth/login">Login</RouterLink>
-          <RouterLink to="/auth/register">Register</RouterLink>
-        </template>
-        <template v-else>
-          <!-- If the user is logged in, show these links -->
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
-          <RouterLink to="/all-tasks">All Tasks</RouterLink>
-          <RouterLink to="/completed-tasks">Completed Tasks</RouterLink>
-          <RouterLink to="/add-task">Add New Task</RouterLink>
-          <button @click="handleSignOut">Sign Out</button>
-        </template>
-      </nav>
-      <button @click="toggleDark()">Toggle Dark Mode</button>
-    </div>
-  </header>
-
-  <!-- RouterView to display the current route's component -->
-  <RouterView />
+  <div id="app">
+    <nav class="navbar">
+      <div class="container nav-container">
+        <RouterLink to="/" class="nav-logo">EZ2DO</RouterLink>
+        <div class="nav-links">
+          <template v-if="!isLoggedIn">
+            <RouterLink to="/auth/login" class="nav-link">Login</RouterLink>
+            <RouterLink to="/auth/register" class="nav-link"
+              >Register</RouterLink
+            >
+          </template>
+          <template v-else>
+            <RouterLink to="/" class="nav-link">Home</RouterLink>
+            <RouterLink to="/about" class="nav-link">About</RouterLink>
+            <RouterLink to="/all-tasks" class="nav-link">All Tasks</RouterLink>
+            <RouterLink to="/completed-tasks" class="nav-link"
+              >Completed Tasks</RouterLink
+            >
+            <RouterLink to="/add-task" class="nav-link"
+              >Add New Task</RouterLink
+            >
+            <button @click="handleSignOut" class="btn">Sign Out</button>
+          </template>
+        </div>
+      </div>
+    </nav>
+    <main class="container mt-4">
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <script setup>
@@ -34,25 +36,18 @@ import { ref, onMounted, onBeforeMount } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../src/stores/user";
-import { useDark, useToggle } from "@vueuse/core";
 
 const router = useRouter();
 const userStore = useUserStore();
 const { user, isLoggedIn } = storeToRefs(userStore);
 const isUserloggedIn = ref(false);
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
 
 onMounted(() => {
   try {
-    // Fetch the user data from the store
     userStore.fetchUser();
-    // Check if the user is stored in localStorage
     if (!user.value) {
-      // If no user is found, redirect to login page
       router.push({ path: "/auth/login" });
     } else {
-      // If user is found, update the reactive variable and redirect to home
       isUserloggedIn.value = true;
       router.push({ path: "/" });
     }
@@ -60,15 +55,71 @@ onMounted(() => {
     console.log(error);
   }
 });
-/**
- * Signs out the user and redirects to the login page.
- */
+
 let handleSignOut = () => {
-  // Call the signOut function from the user store
   userStore.signOut();
-  // Redirect to login page
   router.push({ path: "/auth/login" });
-  // Update the reactive variable to false
   isUserloggedIn.value = false;
 };
 </script>
+
+<style scoped>
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: var(--custom-color-brand);
+  padding: 1rem 0;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: var(--custom-bg-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--custom-border-radius);
+  transition: background-color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.router-link-active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-button {
+  background-color: var(--custom-bg-color);
+  color: var(--custom-color-brand);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--custom-border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: var(--custom-color-secondary);
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+</style>

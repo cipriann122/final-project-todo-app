@@ -1,27 +1,28 @@
 <template>
-  <h4>This Page Displays completed tasks</h4>
   <div class="container">
-    <!-- Display tasks that belong to the current user and are completed -->
-    <ul v-if="userCompletedTasks.length > 0">
-      <li v-for="task in userCompletedTasks" :key="task.id">
-        <h5>{{ task.task }}</h5>
-        <!-- Display task title -->
-        <h6>{{ task.description.title }}</h6>
-        <!-- Display task description title -->
-        <h6>{{ task.description.timeToBeCompleted }}</h6>
-        <!-- Display task time to be completed -->
-        <ul>
-          <li
-            v-for="(extraInfo, index) in task.description.extraInfoRequired"
-            :key="index"
-          >
-            {{ extraInfo }}
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <!-- Display a message if no completed tasks are found for the current user -->
-    <div v-else>
+    <h1 class="header">Completed Tasks</h1>
+    <div v-if="userCompletedTasks.length > 0" class="row">
+      <div v-for="task in userCompletedTasks" :key="task.id" class="col-4 card">
+        <h3>{{ task.task }}</h3>
+        <p><strong>Title:</strong> {{ task.description.title }}</p>
+        <p>
+          <strong>Time to Be Completed:</strong>
+          {{ task.description.timeToBeCompleted }}
+        </p>
+        <div v-if="task.description.extraInfoRequired.length > 0">
+          <p><strong>Extra Info Required:</strong></p>
+          <ul>
+            <li
+              v-for="(extraInfo, index) in task.description.extraInfoRequired"
+              :key="index"
+            >
+              {{ extraInfo }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div v-else class="text-center">
       <p>No completed tasks found.</p>
     </div>
   </div>
@@ -46,3 +47,9 @@ const userCompletedTasks = computed(() => {
   return []; // Return an empty array if user is not logged in or no completed tasks
 });
 </script>
+
+<style scoped>
+.card {
+  margin-bottom: 1rem;
+}
+</style>
