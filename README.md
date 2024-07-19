@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/cipriann122/final-project-todo-app">
-    <img src="src/assets/logo/png/logo-no-background.png" alt="Logo" width="80" height="80">
+    <img src="src/assets/logo/png/logo-no-background.png" alt="Logo" height="80">
   </a>
 
 <h3 align="center">EZ2DO App</h3>
