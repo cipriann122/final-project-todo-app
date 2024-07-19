@@ -17,6 +17,7 @@ import AuthPage from "../pages/AuthPage.vue";
 // Import components for nested routes
 import SignIn from "../components/SignIn.vue";
 import SignUp from "../components/SignUp.vue";
+import AccountPage from "@/pages/AccountPage.vue";
 
 // ------------------------------------------------------------------------
 // Router Configuration Block
@@ -32,6 +33,11 @@ const router = createRouter({
       path: "/", // Path for the home page
       name: "home", // Name of the route
       component: HomePage, // Component to render
+    },
+    {
+      path: "/account",
+      name: "account",
+      component: AccountPage,
     },
     {
       path: "/about", // Path for the about page

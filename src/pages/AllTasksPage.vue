@@ -47,10 +47,12 @@ import { ref, watch } from "vue";
 import { useTaskStore } from "../stores/taskStore";
 import { useUserStore } from "../stores/user";
 import { useRoute } from "vue-router";
+import { useToast } from "primevue/usetoast";
 import TaskEditModal from "../components/TaskEditModal.vue";
 
 const taskstore = useTaskStore();
 const userStore = useUserStore();
+const toast = useToast();
 
 const { tasks, deleteTask, markTaskCompleted, getTasksByUserId, editTask } =
   taskstore;

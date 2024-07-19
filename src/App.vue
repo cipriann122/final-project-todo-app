@@ -12,6 +12,7 @@
           </template>
           <template v-else>
             <RouterLink to="/" class="nav-link">Home</RouterLink>
+            <RouterLink to="/account" class="nav-link">Account</RouterLink>
             <RouterLink to="/about" class="nav-link">About</RouterLink>
             <RouterLink to="/all-tasks" class="nav-link">All Tasks</RouterLink>
             <RouterLink to="/completed-tasks" class="nav-link"

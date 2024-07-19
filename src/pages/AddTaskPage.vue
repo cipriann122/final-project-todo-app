@@ -84,55 +84,52 @@
 import { reactive, ref } from "vue";
 import { useTaskStore } from "../stores/taskStore";
 import { useUserStore } from "../stores/user";
+import { useToast } from "primevue/usetoast";
 
 const taskStore = useTaskStore();
 const userStore = useUserStore();
+const toast = useToast();
 const { generateTaskForCurrentUser } = taskStore;
+
 const newTask = reactive({
-  title: "", // Title of the new task
+  title: "",
   description: {
-    title: "", // Detailed description of the new task
-    timeToBeCompleted: "", // Time required to complete the new task
-    extraInfoRequired: [], // Array for additional information required for the task
+    title: "",
+    timeToBeCompleted: "",
+    extraInfoRequired: [],
   },
 });
 
-const newExtraInfo = ref(""); // Reference for new extra info input
-const taskAdded = ref(false); // Reference for tracking if a task has been added
+const newExtraInfo = ref("");
+const taskAdded = ref(false);
 
-// Function to handle form submission
 const handleSubmit = () => {
   const taskTitle = newTask.title;
-  const taskDescription = JSON.parse(JSON.stringify(newTask.description)); // // Create a deep copy of the new task description to avoid reactivity issues
+  const taskDescription = JSON.parse(JSON.stringify(newTask.description));
   generateTaskForCurrentUser(taskTitle, taskDescription);
-  // Use generateTaskForCurrentUser to add the new task for the logged-in user
   taskAdded.value = true;
 };
 
-// Function to add extra info
 const addExtraInfo = () => {
   if (newExtraInfo.value.trim()) {
-    // Check if the newExtraInfo value is not empty after trimming
-    newTask.description.extraInfoRequired.push(newExtraInfo.value.trim()); // Add the trimmed value to the extraInfoRequired array
-    newExtraInfo.value = ""; // Clear the input field
+    newTask.description.extraInfoRequired.push(newExtraInfo.value.trim());
+    newExtraInfo.value = "";
   }
 };
 // Function to remove extra info
 const removeExtraInfo = (index) => {
-  newTask.description.extraInfoRequired.splice(index, 1); // Remove the item at the specified index from the extraInfoRequired array
+  newTask.description.extraInfoRequired.splice(index, 1);
 };
-// Function to reset the form
 const resetForm = () => {
-  newTask.title = ""; // Clear the title field
-  newTask.description.title = ""; // Clear the description title field
-  newTask.description.timeToBeCompleted = ""; // Clear the time to be completed field
-  newTask.description.extraInfoRequired = []; // Clear the extra info required array
+  newTask.title = "";
+  newTask.description.title = "";
+  newTask.description.timeToBeCompleted = "";
+  newTask.description.extraInfoRequired = [];
 };
 
-// Function to start a new task submission
 const startNewTask = () => {
-  resetForm(); // Reset the form fields
-  taskAdded.value = false; // Set taskAdded to false to show the form again
+  resetForm();
+  taskAdded.value = false;
 };
 </script>
 
