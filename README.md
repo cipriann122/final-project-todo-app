@@ -1,208 +1,234 @@
-# ToDo Application
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
-This is a Vue.js-based ToDo application that utilizes Pinia for state management and Vue Router for navigation. The application allows users to manage their tasks, including adding new tasks, viewing all tasks, marking tasks as completed, and deleting tasks. Users can also register and log in to the application.
+<a id="readme-top"></a>
 
-## Table of Contents
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-- [ToDo Application](#todo-application)
-  - [Table of Contents](#table-of-contents)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Running the Application](#running-the-application)
-  - [Project Structure](#project-structure)
-    - [Components](#components)
-      - [HelloWorld.vue](#helloworldvue)
-      - [PersonalRouter.vue](#personalroutervue)
-      - [HomePage.vue](#homepagevue)
-      - [AboutPage.vue](#aboutpagevue)
-      - [AllTasksPage.vue](#alltaskspagevue)
-      - [CompletedTasksPage.vue](#completedtaskspagevue)
-      - [AddTaskPage.vue](#addtaskpagevue)
-      - [AuthPage.vue](#authpagevue)
-      - [SignIn.vue](#signinvue)
-      - [SignUp.vue](#signupvue)
-    - [Stores](#stores)
-      - [taskStore.js](#taskstorejs)
-      - [userStore.js](#userstorejs)
-    - [Routing](#routing)
-  - [Where to Go From Here?](#where-to-go-from-here)
-    - [Styling Enhancements](#styling-enhancements)
-    - [Task Management Enhancements](#task-management-enhancements)
-    - [User Management Enhancements](#user-management-enhancements)
-    - [Additional Features](#additional-features)
-    - [Third-Party Libraries](#third-party-libraries)
-    - [Local Storage Enhancements](#local-storage-enhancements)
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/cipriann122/final-project-todo-app">
+    <img src="src/assets/logo/png/logo-no-background.png" alt="Logo" width="80" height="80">
+  </a>
+
+<h3 align="center">EZ2DO App</h3>
+
+  <p align="center">
+    This is a Vue.js-based ToDo application that utilizes Pinia for state management and Vue Router for navigation. The application allows users to manage their tasks, including adding new tasks, viewing all tasks, marking tasks as completed, and deleting tasks. Users can also register and log in to the application which uses Supabase's API for user authentication and management.
+    <br />
+    <a href="https://github.com/cipriann122/final-project-todo-app"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://final-project-todo-app.netlify.app/">View Demo</a>
+    ·
+    <a href="https://github.com/cipriann122/final-project-todo-app/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    ·
+    <a href="https://github.com/cipriann122/final-project-todo-app/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+
+## About The Project
+
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+### Built With
+
+- [![Vue][Vue.js]][Vue-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
 
 ## Getting Started
 
+To get a local copy up and running follow these simple example steps.
+
 ### Prerequisites
 
-Before you begin, ensure you have met the following requirements:
+Before you begin, ensure you have Node.js and the npm package manager installed
 
-- Node.js installed on your machine.
-- npm (Node Package Manager) or yarn installed.
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/todo-app.git
-   cd todo-app
+1. Clone the repo
+   ```sh
+   git clone https://github.com/cipriann122/final-project-todo-app.git
+   cd final-project-todo-app
    ```
-2. Install the dependencies:
-   ```bash
+2. Install NPM packages
+   ```sh
    npm install
-   # or
-   yarn install
    ```
 
-### Running the Application
+## Running the application
 
-To start the development server, run:
+- To start the development server, run:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+  ```sh
+  npm run dev
+  # or
+  yarn dev
+  ```
 
-This will start the application and a route will be provided to you in the integrated terminal.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Project Structure
+<!-- USAGE EXAMPLES -->
 
-### Components
+## Usage
 
-#### HelloWorld.vue
+- Task Organization: Create, edit, and manage your tasks
+  with ease. Our app allows you to categorize tasks by priority, set
+  deadlines, and add detailed notes to keep all necessary information at
+  your fingertips.
 
-Displays a welcome message.
+- Account Management: Effortlessly manage your account
+  settings, update personal information, and secure your data with our
+  robust authentication features.
 
-#### PersonalRouter.vue
+- Responsive Design: Enjoy a seamless experience on any
+  device. EZ2DO is optimized for both desktop and mobile devices, allowing
+  you to access your tasks whenever and wherever you need.
 
-Provides navigation links for the application.
+- Secure and Reliable: Built with cutting-edge security
+  measures, EZ2DO ensures that your data is protected and your privacy is
+  maintained.
 
-#### HomePage.vue
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Displays the home view with a counter example using Pinia.
+<!-- ROADMAP -->
 
-#### AboutPage.vue
+## Roadmap
 
-Displays information about the application.
+- [ ] Updated design
+- [ ] Priority tasks
+- [ ] Better performance
+  - [ ] Faster load times
 
-#### AllTasksPage.vue
+See the [open issues](https://github.com/cipriann122/final-project-todo-app/issues) for a full list of proposed features (and known issues).
 
-Displays all tasks and allows marking tasks as completed or deleting them.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-#### CompletedTasksPage.vue
+<!-- CONTRIBUTING -->
 
-Displays completed tasks.
+## Contributing
 
-#### AddTaskPage.vue
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-Allows users to add new tasks.
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
 
-#### AuthPage.vue
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Serves as a parent component for authentication-related nested routes.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-#### SignIn.vue
+<!-- CONTACT -->
 
-Handles the sign-in process.
+## Contact
 
-#### SignUp.vue
+Ciprian Gombar - [@cipriann122](https://twitter.com/cipriann122)
 
-Handles the sign-up process.
+Project Link: [https://github.com/cipriann122/final-project-todo-app](https://github.com/cipriann122/final-project-todo-app)
 
-### Stores
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-#### taskStore.js
+<!-- ACKNOWLEDGMENTS -->
 
-Manages the state of tasks, including adding, marking as completed, and deleting tasks.
+## Acknowledgments
 
-#### userStore.js
+- []()
+- []()
+- []()
 
-Manages user authentication and profile information, including registering, signing in, and signing out.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Routing
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-The routing configuration is defined in `router.js`. The application uses Vue Router to navigate between different pages and includes nested routes for authentication.
-
-## Where to Go From Here?
-
-Here are 20 possible updates and enhancements that beginners can work on to improve this application::
-
-### Styling Enhancements
-
-1. **Styling Enhancements**: Improve the overall styling using CSS or a framework like Tailwind CSS.
-   - **CSS Grid/Flexbox**: Use CSS Grid or Flexbox to create a responsive layout.
-   - **Variables**: Use CSS variables for consistent theming and easy updates.
-   - **Animations**: Add subtle animations for interactions like button clicks or page transitions.
-   - **Hover Effects**: Add hover effects to buttons and links to improve interactivity.
-   - **Fonts and Icons**: Integrate Google Fonts for custom typography and use a library like Font Awesome for icons.
-2. **Responsive Design**: Make the application responsive so it looks good on mobile devices.
-   - **Media Queries**: Use media queries to adjust the layout and styling for different screen sizes.
-   - **Mobile Menu**: Implement a hamburger menu for mobile navigation.
-   - **Grid Adjustments**: Change the number of columns or layout for smaller screens.
-3. **Dark Mode**: Add a toggle for dark mode.
-   - **CSS Variables**: Use CSS variables to easily switch between light and dark themes.
-   - **Transition Effects**: Add smooth transition effects when toggling between themes.
-
-### Task Management Enhancements
-
-5. **Task Editing**: Add functionality to edit existing tasks.
-6. **Task Due Dates**: Allow users to add due dates to tasks.
-7. **Task Prioritization**: Implement a priority system for tasks (e.g., high, medium, low).
-8. **Search Functionality**: Add a search bar to filter tasks by title or description.
-9. **Sort Tasks**: Enable sorting of tasks by due date, priority, or completion status.
-10. **Task Categories**: Allow users to categorize tasks (e.g., Work, Personal, Shopping).
-11. **Subtasks**: Enable the creation of subtasks within a task.
-12. **Recurring Tasks**: Allow users to set tasks to recur daily, weekly, or monthly.
-13. **Task Attachments**: Let users attach files or images to tasks.
-14. **Task Comments**: Add a commenting system within tasks for additional notes or collaboration.
-15. **Drag and Drop**: Implement drag-and-drop functionality for task reordering.
-
-### User Management Enhancements
-
-16. **User Profile Page**: Create a user profile page where users can update their information.
-
-### Additional Features
-
-18. **Notifications**: Implement notifications to remind users of upcoming tasks or deadlines.
-19. **Progress Tracking**: Show a progress bar indicating the completion percentage of all tasks.
-    s
-
-### Third-Party Libraries
-
-21. **Axios**: Use Axios for handling HTTP requests to a backend server or external APIs.
-22. **Lodash**: Integrate Lodash for utility functions to simplify data manipulation.
-23. **Moment.js or Date-fns**: Use Moment.js or Date-fns for date and time manipulation.
-24. **Vue Draggable**: Implement Vue Draggable for drag-and-drop functionality within lists.
-25. **Vuelidate or VeeValidate**: Add form validation using Vuelidate or VeeValidate to enhance user input handling.
-26. **Toastification**: Implement Toastification for showing toast notifications to users.
-27. **Vuex Persist**: Use Vuex Persist to persist the state of the application across page reloads.
-28. **Chart.js or ECharts**: Integrate Chart.js or ECharts for data visualization and analytics.
-29. **Vue-i18n**: Add Vue-i18n for internationalization and localization support.
-
-### Local Storage Enhancements
-
-Leveraging localStorage can significantly improve the user experience by persisting data across sessions. Here are some updates and enhancements you can make using localStorage to save key-value pairs, such as tasks and user profiles:
-
-1. **Persist User Sessions**: Save user session data in localStorage to keep users logged in even after refreshing the page.
-
-   - **Example**: When a user logs in, store their session token and user ID in localStorage. On page load, check localStorage for these values and automatically log the user in if they exist.
-
-2. **Store Tasks Locally**: Save tasks to localStorage so that they persist across page reloads.
-
-   - **Example**: Whenever a task is added, edited, or deleted, update the tasks in localStorage. On page load, retrieve the tasks from localStorage and populate the task list.
-
-3. **User Profile Information**: Save user profile details such as email, username, and preferences in localStorage.
-
-   - **Example**: When a user updates their profile information, save the updated details in localStorage. On page load, retrieve and display the profile information.
-
-4. **Theme Preferences**: Store user preferences for light or dark mode in localStorage.
-
-   - **Example**: When a user toggles between light and dark mode, save their preference in localStorage. On page load, apply the saved theme preference.
-
-5. **Task Filters and Sorting**: Persist task filter and sorting options in localStorage.
-
-   - **Example**: Save the user's selected filter (e.g., show only completed tasks) and sorting order (e.g., by due date) in localStorage. On page load, apply these settings automatically.
+[contributors-shield]: https://img.shields.io/github/contributors/cipriann122/final-project-todo-app.svg?style=for-the-badge
+[contributors-url]: https://github.com/cipriann122/final-project-todo-app/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/cipriann122/final-project-todo-app.svg?style=for-the-badge
+[forks-url]: https://github.com/cipriann122/final-project-todo-app/network/members
+[stars-shield]: https://img.shields.io/github/stars/cipriann122/final-project-todo-app.svg?style=for-the-badge
+[stars-url]: https://github.com/cipriann122/final-project-todo-app/stargazers
+[issues-shield]: https://img.shields.io/github/issues/cipriann122/final-project-todo-app.svg?style=for-the-badge
+[issues-url]: https://github.com/cipriann122/final-project-todo-app/issues
+[license-shield]: https://img.shields.io/github/license/cipriann122/final-project-todo-app.svg?style=for-the-badge
+[license-url]: https://github.com/cipriann122/final-project-todo-app/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/cipriangombar
+[product-screenshot]: src/assets/img/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Svelte-url]: https://svelte.dev/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com
