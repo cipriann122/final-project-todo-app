@@ -22,7 +22,7 @@
           />
         </div>
         <Toast position="bottom-right" />
-        <Button type="submit" severity="success" label="Log in" raised />
+        <Button type="submit" label="Log in" outlined />
       </form>
       <p v-show="formState.errorMsg" class="error">
         {{ formState.errorMsg }}
@@ -88,11 +88,7 @@ const signIn = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(
-    to bottom,
-    #1a1a1a,
-    #2a2a2a
-  ); /* Gradient background */
+  background: #1a1a1a;
   padding: 1rem;
 }
 
@@ -110,7 +106,7 @@ const signIn = async () => {
 .header {
   margin-bottom: 0.5rem;
   font-size: 2rem;
-  color: var(--primary-color);
+  color: var(--primary-color); /* Color for the welcome message */
 }
 
 .description {
@@ -135,9 +131,33 @@ const signIn = async () => {
   opacity: 0.8;
 }
 
+/* Button Styling */
+.p-button {
+  color: var(--primary-color); /* Color for button text */
+}
+
+.p-button.p-button-outlined {
+  border-color: var(--primary-color);
+}
+
+.p-button.p-button-text {
+  color: var(--primary-color); /* Color for button text */
+}
+
+.p-button.p-button-outlined.p-button-severity-success {
+  color: var(
+    --primary-color
+  ); /* Ensure outlined button has the right text color */
+}
+
+.p-button:hover {
+  color: #5bc8db; /* Hover color matching the primary color */
+  border-color: #5bc8db; /* Hover border color for outlined buttons */
+}
+
 .link-button {
   margin-top: 0.5rem;
-  color: var(--primary-color);
+  color: var(--primary-color); /* Link color */
   text-decoration: none;
   transition: var(--transition);
 }

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div class="gradient"></div>
     <nav class="navbar">
       <div class="container nav-container">
         <a @click="handleLogoClick" class="nav-logo">EZ2DO</a>
@@ -40,6 +41,7 @@
       </RouterView>
     </main>
   </div>
+  <ScrollTop />
 </template>
 
 <script setup>
@@ -100,7 +102,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* background-color: var(--background-color); */
   color: var(--text-color);
-  background: linear-gradient(to bottom, #1a1a1a, #2a2a2a);
+  background: #1a1a1a;
 }
 
 #app {
@@ -108,6 +110,13 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* Class for animated-background - wip */
+/* .gradient {
+  position: fixed;
+  height: 100vh;
+  z-index: -1;
+} */
 
 .navbar {
   background-color: rgba(26, 26, 26, 0.8);

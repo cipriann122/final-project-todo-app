@@ -6,8 +6,8 @@
       <div v-if="error" class="error">{{ error }}</div>
       <div v-else-if="tasks.length > 0" class="row">
         <div v-for="task in tasks" :key="task.id" class="col-4 card">
-          <h3>{{ task.title }}</h3>
-          <p><strong>Title:</strong> {{ task.description.title }}</p>
+          <h3>{{ task.task }}</h3>
+          <p><strong>Description:</strong> {{ task.description.title }}</p>
           <p>
             <strong>Extra Info Required:</strong>
             {{ task.description.extraInfoRequired.join(", ") }}
@@ -20,18 +20,17 @@
             <strong>Status:</strong>
             {{ task.is_complete ? "Completed" : "Incomplete" }}
           </p>
-          <!-- Conditional styling for Mark As Completed button -->
           <button
             :class="['btn', task.is_complete ? 'completed' : 'primary']"
             :disabled="task.is_complete"
-            @click="markTaskCompleted(task.id)"
+            @click="handleMarkTaskCompleted(task.id)"
           >
             Mark as Completed
           </button>
-          <button class="btn secondary" @click="deleteTask(task.id)">
+          <button class="btn secondary" @click="handleDeleteTask(task.id)">
             Delete Task
           </button>
-          <button class="btn secondary" @click="editTaskClicked(task)">
+          <button class="btn secondary" @click="handleEditTaskClick(task)">
             Edit Task
           </button>
         </div>
@@ -43,8 +42,8 @@
     <TaskEditModal
       v-if="showEditModal"
       :task="selectedTask"
-      @updateTask="updateTask"
-      @close="closeEditModal"
+      @updateTask="handleUpdateTask"
+      @close="handleCloseEditModal"
     />
   </div>
 </template>
@@ -61,8 +60,13 @@ const taskstore = useTaskStore();
 const userStore = useUserStore();
 const toast = useToast();
 
-const { tasks, deleteTask, markTaskCompleted, getTasksByUserId, editTask } =
-  taskstore;
+const {
+  tasks,
+  deleteTask: storeDeleteTask,
+  markTaskCompleted,
+  getTasksByUserId,
+  editTask,
+} = taskstore;
 const route = useRoute();
 
 const loading = ref(false);
@@ -97,14 +101,66 @@ async function fetchData(userId) {
   }
 }
 
-function editTaskClicked(task) {
+function handleEditTaskClick(task) {
   selectedTask.value = task;
   showEditModal.value = true;
 }
 
-function updateTask(updatedTask) {
-  editTask(updatedTask.id, updatedTask);
-  closeEditModal();
+function handleUpdateTask(updatedTask) {
+  editTask(updatedTask.id, updatedTask)
+    .then(() => {
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Task updated successfully!",
+      });
+    })
+    .catch((error) => {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Failed to update task!",
+      });
+    })
+    .finally(() => {
+      closeEditModal();
+    });
+}
+
+function handleDeleteTask(taskId) {
+  storeDeleteTask(taskId)
+    .then(() => {
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Task deleted successfully!",
+      });
+    })
+    .catch((error) => {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Failed to delete task!",
+      });
+    });
+}
+
+function handleMarkTaskCompleted(taskId) {
+  markTaskCompleted(taskId)
+    .then(() => {
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Task marked as completed!",
+      });
+    })
+    .catch((error) => {
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Failed to mark task as completed!",
+      });
+    });
 }
 
 function closeEditModal() {

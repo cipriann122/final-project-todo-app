@@ -1,5 +1,6 @@
 <template>
   <div class="home-page">
+    <!-- Welcome Message -->
     <h1>Welcome to EZ2DO, {{ userName }}!</h1>
     <p v-if="!fullNameSet && isLoggedIn" class="notice">
       You can set your full name on the
@@ -73,6 +74,17 @@ onMounted(async () => {
   margin-top: 2rem;
 }
 
+/* Logo Styling */
+.logo-container {
+  margin-bottom: 2rem;
+}
+
+.logo {
+  max-width: 250px; /* Adjust size as needed */
+  height: auto;
+}
+
+/* Text Styling */
 h1 {
   font-size: 2rem;
   color: var(--primary-color);

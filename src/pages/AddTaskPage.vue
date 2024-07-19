@@ -156,8 +156,6 @@ const startNewTask = () => {
 </script>
 
 <style scoped>
-/* Your existing styles here */
-
 .extra-info-list {
   list-style-type: none;
   padding: 0;

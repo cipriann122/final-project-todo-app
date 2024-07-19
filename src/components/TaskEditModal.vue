@@ -38,7 +38,7 @@ const editedTask = ref({
 });
 
 // Emit events
-const emit = defineEmits(["updateTask"]);
+const emit = defineEmits(["updateTask", "close"]);
 
 // Methods
 function handleSubmit() {

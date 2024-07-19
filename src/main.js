@@ -1,8 +1,8 @@
 import "./assets/main.css";
+import "./assets/animated-background.scss";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import { isAuthApiError } from "@supabase/supabase-js";
 
 import App from "./App.vue";
 import router from "./router";
@@ -15,6 +15,7 @@ import Button from "primevue/button";
 import Toast from "primevue/toast";
 import ToggleButton from "primevue/togglebutton";
 import ToggleSwitch from "primevue/toggleswitch";
+import ScrollTop from "primevue/scrolltop";
 
 const app = createApp(App);
 
@@ -34,6 +35,7 @@ app.component("Button", Button);
 app.component("Toast", Toast);
 app.component("ToggleButton", ToggleButton);
 app.component("ToggleSwitch", ToggleSwitch);
+app.component("ScrollTop", ScrollTop);
 
 app.use(createPinia());
 app.use(router);
