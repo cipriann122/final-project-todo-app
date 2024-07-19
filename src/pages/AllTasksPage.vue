@@ -20,8 +20,9 @@
             <strong>Status:</strong>
             {{ task.is_complete ? "Completed" : "Incomplete" }}
           </p>
+          <!-- Conditional styling for Mark As Completed button -->
           <button
-            class="btn primary"
+            :class="['btn', task.is_complete ? 'completed' : 'primary']"
             :disabled="task.is_complete"
             @click="markTaskCompleted(task.id)"
           >
@@ -180,6 +181,13 @@ function closeEditModal() {
   background-color: #333;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Completed button styling */
+.btn.completed {
+  background-color: #ccc; /* Greyed out */
+  color: #666;
+  cursor: not-allowed;
 }
 
 .error {
