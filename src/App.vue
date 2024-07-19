@@ -2,7 +2,7 @@
   <div id="app">
     <nav class="navbar">
       <div class="container nav-container">
-        <RouterLink to="/" class="nav-logo">EZ2DO</RouterLink>
+        <a @click="handleLogoClick" class="nav-logo">EZ2DO</a>
         <div class="nav-links">
           <template v-if="!isLoggedIn">
             <RouterLink to="/auth/login" class="nav-link">Login</RouterLink>
@@ -73,6 +73,12 @@ const handleSignOut = () => {
   router.push({ path: "/auth/login" });
   isUserloggedIn.value = false;
 };
+
+const handleLogoClick = () => {
+  if (isLoggedIn.value) {
+    router.push({ path: "/" });
+  }
+};
 </script>
 
 <style>
@@ -126,6 +132,7 @@ body {
   color: var(--primary-color);
   text-decoration: none;
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .nav-logo:hover {

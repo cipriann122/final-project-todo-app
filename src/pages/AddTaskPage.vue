@@ -81,6 +81,8 @@
         <button type="submit" class="btn primary block">Add Task</button>
       </form>
     </div>
+    <Toast position="bottom-right" />
+    <!-- PrimeVue Toast component -->
   </div>
 </template>
 
@@ -88,6 +90,7 @@
 import { reactive, ref } from "vue";
 import { useTaskStore } from "../stores/taskStore";
 import { useToast } from "primevue/usetoast";
+import Toast from "primevue/toast"; // Import PrimeVue Toast
 
 const taskStore = useTaskStore();
 const toast = useToast();
@@ -105,11 +108,27 @@ const newTask = reactive({
 const newExtraInfo = ref("");
 const taskAdded = ref(false);
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   const taskTitle = newTask.title;
   const taskDescription = JSON.parse(JSON.stringify(newTask.description));
-  generateTaskForCurrentUser(taskTitle, taskDescription);
-  taskAdded.value = true;
+  try {
+    await generateTaskForCurrentUser(taskTitle, taskDescription);
+    taskAdded.value = true;
+    toast.add({
+      severity: "success",
+      summary: "Task Added",
+      detail: "New task successfully created.",
+      life: 3000,
+    });
+  } catch (error) {
+    console.error("Error adding task:", error);
+    toast.add({
+      severity: "error",
+      summary: "Task Creation Failed",
+      detail: "There was an error creating the task.",
+      life: 3000,
+    });
+  }
 };
 
 const addExtraInfo = () => {
@@ -137,16 +156,18 @@ const startNewTask = () => {
 </script>
 
 <style scoped>
+/* Your existing styles here */
+
 .extra-info-list {
   list-style-type: none;
   padding: 0;
-  margin-top: 0.5rem; /* Added margin for spacing from the button */
+  margin-top: 0.5rem;
 }
 
 .extra-info-item {
-  background-color: #2a2a2a; /* Darker background for list items */
-  border: 1px solid #444; /* Border color for items */
-  border-radius: 8px; /* Rounded corners */
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   display: flex;
@@ -155,11 +176,11 @@ const startNewTask = () => {
 }
 
 .extra-info-item button {
-  background-color: #3498db; /* Blue background for remove button */
+  background-color: #3498db;
   color: #fff;
-  padding: 0.25rem 0.5rem; /* Smaller padding for compact size */
-  font-size: 0.8rem; /* Smaller font size */
-  border-radius: 5px; /* Slightly smaller border radius */
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -168,7 +189,7 @@ const startNewTask = () => {
 }
 
 .form-widget {
-  background-color: #1e1e1e; /* Dark background for the form widget */
+  background-color: #1e1e1e;
   border-radius: 8px;
   padding: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -190,7 +211,7 @@ const startNewTask = () => {
   padding: 0.5rem;
   border: 1px solid #444;
   border-radius: 8px;
-  background-color: #2a2a2a; /* Darker input background */
+  background-color: #2a2a2a;
   color: #ccc;
   transition: border-color 0.3s ease;
 }
@@ -202,11 +223,11 @@ const startNewTask = () => {
 
 .btn {
   display: inline-block;
-  padding: 0.25rem 0.5rem; /* Further reduced padding for a smaller button */
+  padding: 0.25rem 0.5rem;
   border: none;
-  border-radius: 4px; /* Smaller border radius for buttons */
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.8rem; /* Smaller font size for buttons */
+  font-size: 0.8rem;
   text-align: center;
   transition: background-color 0.3s ease;
 }
@@ -223,7 +244,7 @@ const startNewTask = () => {
 .btn.secondary {
   background-color: #666;
   color: #fff;
-  margin-left: 0.5rem; /* Add a slight margin for spacing */
+  margin-left: 0.5rem;
   cursor: pointer;
 }
 
@@ -234,7 +255,7 @@ const startNewTask = () => {
 .flex {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensure items are spaced evenly */
+  justify-content: space-between;
 }
 
 .gap-2 {
