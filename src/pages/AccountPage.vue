@@ -162,22 +162,24 @@ onMounted(() => {
   margin: 0 auto;
   padding: 1.5rem;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  background-color: #1e1e1e; /* Dark background for the page */
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: #eee;
 }
 
 h2 {
   text-align: center;
   margin-bottom: 1.5rem;
+  color: #3498db; /* Blue color for headers */
 }
 
 .section {
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background-color: #fff;
+  background-color: #2a2a2a; /* Darker background for sections */
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .avatar-container {
@@ -190,7 +192,7 @@ h2 {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ccc;
+  border: 2px solid #444; /* Border color for avatar */
 }
 
 label {
@@ -203,9 +205,15 @@ input {
   width: calc(100% - 10px);
   padding: 0.5rem;
   margin-bottom: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #444; /* Dark border for inputs */
   border-radius: 4px;
+  background-color: #2a2a2a; /* Darker background for inputs */
+  color: #ccc;
   font-size: 14px;
+}
+
+input::placeholder {
+  color: #666;
 }
 
 button {
@@ -213,7 +221,7 @@ button {
   width: 100%;
   padding: 0.75rem;
   font-size: 16px;
-  background-color: #4caf50;
+  background-color: #3498db; /* Blue background for buttons */
   color: white;
   border: none;
   border-radius: 4px;
@@ -222,7 +230,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
 .loading,
@@ -230,6 +238,9 @@ button:hover {
   text-align: center;
   margin-bottom: 1rem;
   font-size: 14px;
-  color: #ff0000;
+}
+
+.error {
+  color: #ff4d4f; /* Error color */
 }
 </style>

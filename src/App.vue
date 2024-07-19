@@ -71,56 +71,14 @@ let handleSignOut = () => {
   flex-direction: column;
 }
 
-.header {
-  background-color: var(--custom-color-brand);
-  padding: 1rem 0;
-}
-
-.wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.nav {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
-}
-
-.nav-link {
-  color: var(--custom-bg-color);
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--custom-border-radius);
-  transition: background-color 0.3s ease;
-}
-
-.nav-link:hover,
-.nav-link.router-link-active {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.nav-button {
-  background-color: var(--custom-bg-color);
-  color: var(--custom-color-brand);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--custom-border-radius);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.nav-button:hover {
-  background-color: var(--custom-color-secondary);
-}
-
-.main-content {
-  flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 </style>

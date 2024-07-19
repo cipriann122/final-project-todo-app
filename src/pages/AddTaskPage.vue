@@ -2,59 +2,58 @@
   <div class="container">
     <h1 class="header">Add New Task</h1>
     <div v-if="taskAdded" class="text-center">
-      <p>New task succesfully created.</p>
-      <button @click="startNewTask" class="button primary">
+      <p class="message">New task successfully created.</p>
+      <button @click="startNewTask" class="btn primary">
         Start a New Task
       </button>
     </div>
     <div v-else class="form-widget">
-      <form @submit.prevent="handleSubmit">
-        <div class="form-input">
-          <label for="title" class="input-field-label">Title:</label>
+      <form @submit.prevent="handleSubmit" class="form">
+        <div class="form-group">
+          <label for="title" class="form-label">Title:</label>
           <input
             v-model="newTask.title"
             type="text"
             id="title"
-            class="input-field"
+            class="form-input"
             required
           />
         </div>
-        <div class="form-input">
-          <label for="descriptionTitle" class="input-field-label"
+        <div class="form-group">
+          <label for="descriptionTitle" class="form-label"
             >Description Title:</label
           >
           <input
             v-model="newTask.description.title"
             type="text"
             id="descriptionTitle"
-            class="input-field"
+            class="form-input"
             required
           />
         </div>
-        <div class="form-input">
-          <label for="timeToBeCompleted" class="input-field-label"
+        <div class="form-group">
+          <label for="timeToBeCompleted" class="form-label"
             >Time to be Completed:</label
           >
           <input
             v-model="newTask.description.timeToBeCompleted"
             type="text"
             id="timeToBeCompleted"
-            class="input-field"
+            class="form-input"
             required
           />
         </div>
-        <div class="form-input">
-          <label for="extraInfo" class="input-field-label"
-            >Extra Info Required:</label
-          >
-          <div class="flex">
+        <div class="form-group">
+          <label for="extraInfo" class="form-label">Extra Info Required:</label>
+          <div class="flex flex-wrap gap-2">
             <input
               v-model="newExtraInfo"
               type="text"
               id="extraInfo"
-              class="input-field flex-1"
+              class="form-input flex-1"
+              placeholder="Enter extra info"
             />
-            <button type="button" @click="addExtraInfo" class="button">
+            <button type="button" @click="addExtraInfo" class="btn secondary">
               Add Info
             </button>
           </div>
@@ -62,19 +61,20 @@
             <li
               v-for="(info, index) in newTask.description.extraInfoRequired"
               :key="index"
+              class="extra-info-item"
             >
               {{ info }}
               <button
                 type="button"
                 @click="removeExtraInfo(index)"
-                class="button"
+                class="btn btn-secondary"
               >
                 Remove
               </button>
             </li>
           </ul>
         </div>
-        <button type="submit" class="button primary block">Add Task</button>
+        <button type="submit" class="btn primary block">Add Task</button>
       </form>
     </div>
   </div>
@@ -83,11 +83,9 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useTaskStore } from "../stores/taskStore";
-import { useUserStore } from "../stores/user";
 import { useToast } from "primevue/usetoast";
 
 const taskStore = useTaskStore();
-const userStore = useUserStore();
 const toast = useToast();
 const { generateTaskForCurrentUser } = taskStore;
 
@@ -116,10 +114,11 @@ const addExtraInfo = () => {
     newExtraInfo.value = "";
   }
 };
-// Function to remove extra info
+
 const removeExtraInfo = (index) => {
   newTask.description.extraInfoRequired.splice(index, 1);
 };
+
 const resetForm = () => {
   newTask.title = "";
   newTask.description.title = "";
@@ -138,7 +137,90 @@ const startNewTask = () => {
   list-style-type: none;
   padding: 0;
 }
-.extra-info-list li {
+
+.extra-info-item {
+  background-color: #2a2a2a; /* Darker background for list items */
+  border: 1px solid #444; /* Border color for items */
+  border-radius: 8px; /* Rounded corners */
+  padding: 0.5rem;
   margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.extra-info-item button {
+  background-color: #3498db; /* Blue background for remove button */
+  color: #fff;
+}
+
+.extra-info-item button:hover {
+  background-color: #2980b9;
+}
+
+.form-widget {
+  background-color: #1e1e1e; /* Dark background for the form widget */
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #eee;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #2a2a2a; /* Darker input background */
+  color: #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.btn.primary {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background-color: #2980b9;
+}
+
+.btn.secondary {
+  background-color: #666;
+  color: #fff;
+}
+
+.btn.secondary:hover {
+  background-color: #555;
+}
+
+.block {
+  display: block;
+  width: 100%;
 }
 </style>
