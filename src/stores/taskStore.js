@@ -23,7 +23,6 @@ export const useTaskStore = defineStore("taskStore", () => {
         return null;
       }
 
-      console.log("created a new todo");
       tasks.push(task);
       return data;
     } catch (err) {

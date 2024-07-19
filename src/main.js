@@ -6,6 +6,8 @@ import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
+
+// PrimeVue imports
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
 import Password from "primevue/password";
@@ -16,6 +18,7 @@ import Toast from "primevue/toast";
 import ToggleButton from "primevue/togglebutton";
 import ToggleSwitch from "primevue/toggleswitch";
 import ScrollTop from "primevue/scrolltop";
+import ConfirmDialog from "primevue/confirmdialog";
 
 const app = createApp(App);
 
@@ -36,6 +39,7 @@ app.component("Toast", Toast);
 app.component("ToggleButton", ToggleButton);
 app.component("ToggleSwitch", ToggleSwitch);
 app.component("ScrollTop", ScrollTop);
+app.component("ConfirmDialog", ConfirmDialog);
 
 app.use(createPinia());
 app.use(router);

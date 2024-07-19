@@ -54,6 +54,8 @@
         </button>
       </div>
     </div>
+    <Toast position="bottom-right" />
+    <!-- Add the Toast component here -->
   </div>
 </template>
 
@@ -61,8 +63,11 @@
 import { ref, onMounted } from "vue";
 import { supabase } from "@/utils/supabase";
 import { useUserStore } from "@/stores/user";
+import { useToast } from "primevue/usetoast";
+import Toast from "primevue/toast"; // Import the Toast component
 
 const userStore = useUserStore();
+const toast = useToast(); // Initialize Toast
 
 const userDetails = ref({
   username: "",
@@ -142,9 +147,19 @@ async function updateUserDetails() {
       }
     }
 
-    alert("User details updated successfully!");
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "User details updated successfully!",
+      life: 3000,
+    });
   } catch (err) {
-    error.value = "Failed to update user details.";
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Failed to update user details.",
+      life: 3000,
+    });
     console.error("Error updating user details:", err);
   }
 }

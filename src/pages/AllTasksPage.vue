@@ -4,8 +4,8 @@
       <h1 class="header">All Tasks</h1>
       <div v-if="loading" class="text-center">Loading tasks...</div>
       <div v-if="error" class="error">{{ error }}</div>
-      <div v-else-if="tasks.length > 0" class="row">
-        <div v-for="task in tasks" :key="task.id" class="col-4 card">
+      <div v-else-if="sortedTasks.length > 0" class="row">
+        <div v-for="task in sortedTasks" :key="task.id" class="col-4 card">
           <h3>{{ task.task }}</h3>
           <p><strong>Description:</strong> {{ task.description.title }}</p>
           <p>
@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useTaskStore } from "../stores/taskStore";
 import { useUserStore } from "../stores/user";
 import { useRoute } from "vue-router";
@@ -100,6 +100,17 @@ async function fetchData(userId) {
     loading.value = false;
   }
 }
+
+// Computed property to sort tasks
+const sortedTasks = computed(() => {
+  return tasks.slice().sort((a, b) => {
+    // Incomplete tasks should come first
+    if (a.is_complete === b.is_complete) {
+      return 0; // If the same status, retain original order
+    }
+    return a.is_complete ? 1 : -1;
+  });
+});
 
 function handleEditTaskClick(task) {
   selectedTask.value = task;
