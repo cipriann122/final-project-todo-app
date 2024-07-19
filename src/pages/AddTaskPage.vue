@@ -53,8 +53,12 @@
               class="form-input flex-1"
               placeholder="Enter extra info"
             />
-            <button type="button" @click="addExtraInfo" class="btn secondary">
-              Add Info
+            <button
+              type="button"
+              @click="addExtraInfo"
+              class="btn secondary plus-button"
+            >
+              <i class="fas fa-plus"></i>
             </button>
           </div>
           <ul class="extra-info-list">
@@ -136,6 +140,7 @@ const startNewTask = () => {
 .extra-info-list {
   list-style-type: none;
   padding: 0;
+  margin-top: 0.5rem; /* Added margin for spacing from the button */
 }
 
 .extra-info-item {
@@ -152,6 +157,10 @@ const startNewTask = () => {
 .extra-info-item button {
   background-color: #3498db; /* Blue background for remove button */
   color: #fff;
+  padding: 0.25rem 0.5rem; /* Smaller padding for compact size */
+  font-size: 0.8rem; /* Smaller font size */
+  border-radius: 5px; /* Slightly smaller border radius */
+  cursor: pointer;
 }
 
 .extra-info-item button:hover {
@@ -193,12 +202,13 @@ const startNewTask = () => {
 
 .btn {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem; /* Further reduced padding for a smaller button */
   border: none;
-  border-radius: 8px;
+  border-radius: 4px; /* Smaller border radius for buttons */
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.8rem; /* Smaller font size for buttons */
   text-align: center;
+  transition: background-color 0.3s ease;
 }
 
 .btn.primary {
@@ -213,10 +223,22 @@ const startNewTask = () => {
 .btn.secondary {
   background-color: #666;
   color: #fff;
+  margin-left: 0.5rem; /* Add a slight margin for spacing */
+  cursor: pointer;
 }
 
 .btn.secondary:hover {
   background-color: #555;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure items are spaced evenly */
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .block {
