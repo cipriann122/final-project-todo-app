@@ -1,49 +1,51 @@
 <template>
-  <div class="container">
-    <h1 class="header">All Tasks</h1>
-    <div v-if="loading" class="text-center">Loading tasks...</div>
-    <div v-if="error" class="error">{{ error }}</div>
-    <div v-else-if="tasks.length > 0" class="row">
-      <div v-for="task in tasks" :key="task.id" class="col-4 card">
-        <h3>{{ task.title }}</h3>
-        <p><strong>Title:</strong> {{ task.description.title }}</p>
-        <p>
-          <strong>Extra Info Required:</strong>
-          {{ task.description.extraInfoRequired.join(", ") }}
-        </p>
-        <p>
-          <strong>Time to Be Completed:</strong>
-          {{ task.description.timeToBeCompleted }}
-        </p>
-        <p>
-          <strong>Status:</strong>
-          {{ task.is_complete ? "Completed" : "Incomplete" }}
-        </p>
-        <button
-          class="btn primary"
-          :disabled="task.is_complete"
-          @click="markTaskCompleted(task.id)"
-        >
-          Mark as Completed
-        </button>
-        <button class="btn secondary" @click="deleteTask(task.id)">
-          Delete Task
-        </button>
-        <button class="btn secondary" @click="editTaskClicked(task)">
-          Edit Task
-        </button>
+  <div>
+    <div class="container">
+      <h1 class="header">All Tasks</h1>
+      <div v-if="loading" class="text-center">Loading tasks...</div>
+      <div v-if="error" class="error">{{ error }}</div>
+      <div v-else-if="tasks.length > 0" class="row">
+        <div v-for="task in tasks" :key="task.id" class="col-4 card">
+          <h3>{{ task.title }}</h3>
+          <p><strong>Title:</strong> {{ task.description.title }}</p>
+          <p>
+            <strong>Extra Info Required:</strong>
+            {{ task.description.extraInfoRequired.join(", ") }}
+          </p>
+          <p>
+            <strong>Time to Be Completed:</strong>
+            {{ task.description.timeToBeCompleted }}
+          </p>
+          <p>
+            <strong>Status:</strong>
+            {{ task.is_complete ? "Completed" : "Incomplete" }}
+          </p>
+          <button
+            class="btn primary"
+            :disabled="task.is_complete"
+            @click="markTaskCompleted(task.id)"
+          >
+            Mark as Completed
+          </button>
+          <button class="btn secondary" @click="deleteTask(task.id)">
+            Delete Task
+          </button>
+          <button class="btn secondary" @click="editTaskClicked(task)">
+            Edit Task
+          </button>
+        </div>
+      </div>
+      <div v-else class="text-center">
+        <p>No tasks found.</p>
       </div>
     </div>
-    <div v-else class="text-center">
-      <p>No tasks found.</p>
-    </div>
+    <TaskEditModal
+      v-if="showEditModal"
+      :task="selectedTask"
+      @updateTask="updateTask"
+      @close="closeEditModal"
+    />
   </div>
-  <TaskEditModal
-    v-if="showEditModal"
-    :task="selectedTask"
-    @updateTask="updateTask"
-    @close="closeEditModal"
-  />
 </template>
 
 <script setup>
@@ -110,51 +112,89 @@ function closeEditModal() {
 </script>
 
 <style scoped>
+.header {
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
 .card {
-  background-color: #1e1e1e; /* Dark background for task cards */
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  margin-bottom: 1rem;
-  color: #eee;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(110, 226, 245, 0.1);
 }
 
 .card h3 {
   margin-top: 0;
-  color: #3498db;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
 }
 
 .btn {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: center;
   margin-right: 0.5rem;
+  margin-top: 1rem;
+  transition: var(--transition);
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .btn.primary {
-  background-color: #3498db;
-  color: #fff;
+  background-color: var(--primary-color);
+  color: var(--background-color);
 }
 
 .btn.primary:hover {
-  background-color: #2980b9;
+  background-color: #5bc8db;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(110, 226, 245, 0.2);
 }
 
 .btn.secondary {
-  background-color: #666;
-  color: #fff;
+  background-color: var(--input-background);
+  color: var(--text-color);
 }
 
 .btn.secondary:hover {
-  background-color: #555;
+  background-color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .error {
   color: #ff4d4f;
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

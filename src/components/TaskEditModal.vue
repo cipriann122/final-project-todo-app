@@ -68,7 +68,6 @@ function closeModal() {
 </script>
 
 <style scoped>
-/* Modal styles */
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -80,6 +79,7 @@ function closeModal() {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .modal-wrapper {
@@ -90,15 +90,18 @@ function closeModal() {
 }
 
 .modal-container {
-  background-color: rgb(37, 37, 37);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: 400px;
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  width: 90%;
+  max-width: 500px;
+  animation: slideIn 0.3s ease-out;
 }
 
 .modal-container h3 {
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
 }
 
 .modal-container form {
@@ -107,37 +110,60 @@ function closeModal() {
 }
 
 .modal-container label {
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
 }
 
 .modal-container input,
 .modal-container textarea {
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 2px solid var(--input-background);
+  border-radius: var(--border-radius);
+  background-color: var(--input-background);
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.modal-container input:focus,
+.modal-container textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(110, 226, 245, 0.2);
 }
 
 .modal-buttons {
-  margin-top: 10px;
+  margin-top: 1.5rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .modal-buttons button {
-  padding: 8px 16px;
+  padding: 0.75rem 1.5rem;
   cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  transition: var(--transition);
 }
 
 .modal-buttons button:first-child {
-  background-color: #007bff;
-  color: white;
-  border: none;
+  background-color: var(--primary-color);
+  color: var(--background-color);
 }
 
 .modal-buttons button:last-child {
-  background-color: #ccc;
-  color: #333;
-  border: none;
+  background-color: var(--input-background);
+  color: var(--text-color);
+}
+
+.modal-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(110, 226, 245, 0.2);
+}
+
+.modal-buttons button:active {
+  transform: translateY(0);
 }
 </style>

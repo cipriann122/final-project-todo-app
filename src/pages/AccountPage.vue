@@ -4,9 +4,9 @@
     <div v-if="loading" class="loading">Loading user details...</div>
     <div v-if="error" class="error">{{ error }}</div>
 
-    <form v-if="!loading && !error" @submit.prevent="updateUserDetails">
+    <div v-if="!loading && !error" class="form-container">
       <!-- Profile Section -->
-      <div class="section">
+      <div class="profile-section">
         <h3>Profile Information</h3>
         <div class="avatar-container">
           <img
@@ -15,32 +15,32 @@
             class="avatar"
           />
         </div>
-        <div>
+        <div class="form-group">
           <label for="username">Username</label>
           <input type="text" id="username" v-model="userDetails.username" />
         </div>
-        <div>
+        <div class="form-group">
           <label for="fullName">Full Name</label>
           <input type="text" id="fullName" v-model="userDetails.full_name" />
         </div>
-        <div>
+        <div class="form-group">
           <label for="avatarUrl">Avatar URL</label>
           <input type="text" id="avatarUrl" v-model="userDetails.avatar_url" />
         </div>
-        <div>
+        <div class="form-group">
           <label for="website">Website</label>
           <input type="text" id="website" v-model="userDetails.website" />
         </div>
       </div>
 
       <!-- Account Section -->
-      <div class="section">
+      <div class="account-section">
         <h3>Account Settings</h3>
-        <div>
+        <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" v-model="authDetails.email" />
         </div>
-        <div>
+        <div class="form-group">
           <label for="password">New Password</label>
           <input
             type="password"
@@ -49,10 +49,11 @@
             placeholder="Enter new password"
           />
         </div>
+        <button type="button" class="update-button" @click="updateUserDetails">
+          Update Details
+        </button>
       </div>
-
-      <button type="submit" class="update-button">Update Details</button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -158,28 +159,37 @@ onMounted(() => {
 
 <style scoped>
 .account-page {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1.5rem;
-  font-family: Arial, sans-serif;
-  background-color: #1e1e1e; /* Dark background for the page */
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  color: #eee;
+  max-width: 1200px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
 }
 
 h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #3498db; /* Blue color for headers */
+  color: var(--primary-color);
 }
 
-.section {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background-color: #2a2a2a; /* Darker background for sections */
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.profile-section,
+.account-section {
+  flex: 1;
+  min-width: 320px; /* Minimum width for smaller screens */
+  max-width: 45%; /* Adjust width to ensure both sections fit side-by-side */
+  background-color: #3a3a3a;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  transition: max-width 0.3s ease-in-out;
 }
 
 .avatar-container {
@@ -192,45 +202,44 @@ h2 {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #444; /* Border color for avatar */
+  border: 2px solid #444;
 }
 
 label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: bold;
+  color: #fff;
 }
 
 input {
-  width: calc(100% - 10px);
-  padding: 0.5rem;
+  width: 100%;
+  padding: 0.75rem;
   margin-bottom: 1rem;
-  border: 1px solid #444; /* Dark border for inputs */
-  border-radius: 4px;
-  background-color: #2a2a2a; /* Darker background for inputs */
-  color: #ccc;
-  font-size: 14px;
+  background-color: var(--input-background);
+  border: 1px solid #5a5a5a;
+  border-radius: var(--border-radius);
+  color: #fff;
 }
 
 input::placeholder {
   color: #666;
 }
 
-button {
+.update-button {
   display: block;
   width: 100%;
   padding: 0.75rem;
   font-size: 16px;
-  background-color: #3498db; /* Blue background for buttons */
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #2980b9; /* Darker blue on hover */
+.update-button:hover {
+  background-color: #2980b9;
 }
 
 .loading,
@@ -241,6 +250,18 @@ button:hover {
 }
 
 .error {
-  color: #ff4d4f; /* Error color */
+  color: #ff4d4f;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    flex-direction: column;
+  }
+
+  .profile-section,
+  .account-section {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
 }
 </style>

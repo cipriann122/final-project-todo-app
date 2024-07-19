@@ -87,31 +87,37 @@ const signIn = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #121212;
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    #1a1a1a,
+    #2a2a2a
+  ); /* Gradient background */
   padding: 1rem;
 }
 
 .form-widget {
-  background-color: #1e1e1e;
+  background-color: var(--card-background);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
   max-width: 400px;
   width: 100%;
   text-align: center;
+  animation: slideIn 0.5s ease-out;
 }
 
 .header {
   margin-bottom: 0.5rem;
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: var(--primary-color);
 }
 
 .description {
   margin-bottom: 1.5rem;
   font-size: 1rem;
-  color: #aaa;
+  color: var(--text-color);
+  opacity: 0.8;
 }
 
 .form-input {
@@ -125,26 +131,28 @@ const signIn = async () => {
 
 .text-sm {
   font-size: 0.9rem;
-  color: #ccc;
+  color: var(--text-color);
+  opacity: 0.8;
 }
 
 .link-button {
   margin-top: 0.5rem;
-  color: inherit;
+  color: var(--primary-color);
   text-decoration: none;
+  transition: var(--transition);
 }
 
 .link-button:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 @media (max-width: 600px) {
   .form-widget {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .header {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
 
   .description {
