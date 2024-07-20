@@ -8,7 +8,7 @@
       </button>
     </div>
     <div v-else class="form-widget">
-      <form @submit.prevent="handleSubmit" class="form">
+      <form @submit.prevent="handleSubmit" class="form" autocomplete="off">
         <div class="form-group">
           <label for="title" class="form-label">Title:</label>
           <input
