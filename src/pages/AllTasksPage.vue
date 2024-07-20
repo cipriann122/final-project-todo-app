@@ -43,7 +43,7 @@
       v-if="showEditModal"
       :task="selectedTask"
       @updateTask="handleUpdateTask"
-      @close="handleCloseEditModal"
+      @close="closeEditModal"
     />
   </div>
 </template>
